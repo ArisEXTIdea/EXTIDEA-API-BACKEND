@@ -37,6 +37,10 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
+// -----------------------------------------------------------------------
+// Menmo App
+// -----------------------------------------------------------------------
+
 // Users Router
 $routes->post('/api/menmo/users', 'Menmo::postUser');
 $routes->get('/api/menmo/users', 'Menmo::getUsers');
@@ -44,6 +48,8 @@ $routes->get('/api/menmo/users/(:segment)', 'Menmo::getUserId');
 $routes->get('/api/menmo/users/email/(:segment)', 'Menmo::getUserEmail');
 $routes->put('/api/menmo/users/(:segment)', 'Menmo::putUser');
 $routes->delete('/api/menmo/users/(:segment)', 'Menmo::deleteUser');
+
+// ------------------------------------------------------------------------
 
 
 /*

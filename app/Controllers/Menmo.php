@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 
-use App\Models\MenmoM;
+use App\Models\UserM;
 use CodeIgniter\RESTful\ResourceController;
 
 class Menmo extends ResourceController{
 
     use ResponseTrait;
 
-    protected $MenmoM;
+    protected $UserM;
 
     public function __construct()
     {
-        $this->MenmoM = new MenmoM;
+        $this->UserM = new UserM;
 
         helper(['auth']);
 
@@ -42,7 +42,7 @@ class Menmo extends ResourceController{
                 'user_type' => $this->request->getPost('user_type'),
             ];
 
-            if(!$this->MenmoM->postData($data)){
+            if(!$this->UserM->postData($data)){
                 $respond = [
                     'message' => 'Success - User Created',
                     'data' => $data
@@ -60,10 +60,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoM->getData()){
+            if($this->UserM->getData()){
                 $respond = [
                     'message' => 'Success - Get All User Data',
-                    'data' => $this->MenmoM->getData()
+                    'data' => $this->UserM->getData()
                 ];
                 return $this->respond($respond, 200);;
             } else {
@@ -81,10 +81,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoM->getDataId($uid)){
+            if($this->UserM->getDataId($uid)){
                 $respond = [
                     'message' => 'Success - Get User Data',
-                    'data' => $this->MenmoM->getDataId($uid)
+                    'data' => $this->UserM->getDataId($uid)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -102,10 +102,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoM->getDataEmail($email)){
+            if($this->UserM->getDataEmail($email)){
                 $respond = [
                     'message' => 'Success - Get User Data',
-                    'data' => $this->MenmoM->getDataEmail($email)
+                    'data' => $this->UserM->getDataEmail($email)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -124,7 +124,7 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if(!$this->MenmoM->putUser($uid, $requestData)){
+            if(!$this->UserM->putUser($uid, $requestData)){
                 $respond = [
                     'message' => 'Success - User data Updated',
                     'data' => $requestData
@@ -146,9 +146,9 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoM->getDataId($uid)){
+            if($this->UserM->getDataId($uid)){
 
-                $this->MenmoM->deleteUser($uid);
+                $this->UserM->deleteUser($uid);
 
                 $respond = [
                     'message' => 'Success - User Removed',
@@ -159,8 +159,4 @@ class Menmo extends ResourceController{
             }
         }
     }
-
-    
-    
-
 }
