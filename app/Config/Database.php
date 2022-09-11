@@ -33,8 +33,8 @@ class Database extends Config
     public $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => '',
-        'password' => '',
+        'username' => 'extideam_extidea',
+        'password' => 'EXTbisnis123',
         'database' => '',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
