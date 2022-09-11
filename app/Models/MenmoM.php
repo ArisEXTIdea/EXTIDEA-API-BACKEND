@@ -21,6 +21,11 @@ class MenmoM extends Model{
         $this->where('uid', $uid);
         return $this->findAll();
     }
+
+    public function getDataEmail($email){
+        $this->where('email', $email);
+        return $this->findAll();
+    }
     
     public function putUser($uid, $requestData){
         $keys = array_keys($requestData);

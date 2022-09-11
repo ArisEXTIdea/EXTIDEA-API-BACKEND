@@ -5,8 +5,9 @@ namespace App\Controllers;
 use CodeIgniter\API\ResponseTrait;
 
 use App\Models\MenmoM;
+use CodeIgniter\RESTful\ResourceController;
 
-class Menmo extends BaseController{
+class Menmo extends ResourceController{
 
     use ResponseTrait;
 
@@ -17,6 +18,7 @@ class Menmo extends BaseController{
         $this->MenmoM = new MenmoM;
 
         helper(['auth']);
+
     }
 
     // ----------------------------------------------------------------
@@ -83,6 +85,27 @@ class Menmo extends BaseController{
                 $respond = [
                     'message' => 'Success - Get User Data',
                     'data' => $this->MenmoM->getDataId($uid)
+                ];
+                return $this->respond($respond, 200);
+            } else {
+                return $this->failNotFound('Request Failed - Data not found');
+            }
+        }
+    }
+
+    public function get_user_email(){
+
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uri = explode('/', $_SERVER['PHP_SELF']);
+        $email = end($uri);
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->MenmoM->getDataEmail($email)){
+                $respond = [
+                    'message' => 'Success - Get User Data',
+                    'data' => $this->MenmoM->getDataEmail($email)
                 ];
                 return $this->respond($respond, 200);
             } else {
