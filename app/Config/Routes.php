@@ -38,12 +38,12 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 // Users Router
-$routes->post('/api/menmo/users', 'Menmo::post_users');
-$routes->get('/api/menmo/users', 'Menmo::get_users');
-$routes->get('/api/menmo/users/(:segment)', 'Menmo::get_user_id');
-$routes->get('/api/menmo/users/email/(:segment)', 'Menmo::get_user_email');
-$routes->put('/api/menmo/users/(:segment)', 'Menmo::put_user');
-$routes->delete('/api/menmo/users/(:segment)', 'Menmo::delete_user');
+$routes->post('/api/menmo/users', 'Menmo::postUser');
+$routes->get('/api/menmo/users', 'Menmo::getUsers');
+$routes->get('/api/menmo/users/(:segment)', 'Menmo::getUserId');
+$routes->get('/api/menmo/users/email/(:segment)', 'Menmo::getUserEmail');
+$routes->put('/api/menmo/users/(:segment)', 'Menmo::putUser');
+$routes->delete('/api/menmo/users/(:segment)', 'Menmo::deleteUser');
 
 
 /*

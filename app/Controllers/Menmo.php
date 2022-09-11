@@ -25,7 +25,7 @@ class Menmo extends ResourceController{
     //  API GROUP USERS
     // ----------------------------------------------------------------
 
-    public function post_users(){
+    public function postUser(){
         $apiToken = $this->request->header('Api-Key')->getValue();
 
         if(!checkToken($apiToken)){
@@ -54,7 +54,7 @@ class Menmo extends ResourceController{
         }
     }
     
-    public function get_users(){
+    public function getUsers(){
         $apiToken = $this->request->header('Api-Key')->getValue();
 
         if(!checkToken($apiToken)){
@@ -72,7 +72,7 @@ class Menmo extends ResourceController{
         }
     }
 
-    public function get_user_id(){
+    public function getUserId(){
 
         $apiToken = $this->request->header('Api-Key')->getValue();
         $uri = explode('/', $_SERVER['PHP_SELF']);
@@ -93,7 +93,7 @@ class Menmo extends ResourceController{
         }
     }
 
-    public function get_user_email(){
+    public function getUserEmail(){
 
         $apiToken = $this->request->header('Api-Key')->getValue();
         $uri = explode('/', $_SERVER['PHP_SELF']);
@@ -114,7 +114,7 @@ class Menmo extends ResourceController{
         }
     }
 
-    public function put_user(){
+    public function putUser(){
         $apiToken = $this->request->header('Api-Key')->getValue();
         $uri = explode('/', $_SERVER['PHP_SELF']);
         $uid = end($uri);
@@ -138,7 +138,7 @@ class Menmo extends ResourceController{
 
     }
 
-    public function delete_user() {
+    public function deleteUser() {
         $apiToken = $this->request->header('Api-Key')->getValue();
         $uri = explode('/', $_SERVER['PHP_SELF']);
         $uid = end($uri);
