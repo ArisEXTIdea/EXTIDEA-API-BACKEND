@@ -179,6 +179,7 @@ class Menmo extends ResourceController{
                 'trx_name' => $this->request->getPost('trx_name'),
                 'category' => $this->request->getPost('category'),
                 'trx_category' => $this->request->getPost('trx_category'),
+                'icons' => $this->request->getPost('icons'),
                 'created_at' => $this->request->getPost('created_at'),
                 'updated_at' => $this->request->getPost('updated_at'),
                 'note' => $this->request->getPost('note'),

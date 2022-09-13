@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class MenmoTransactionM extends Model{
     protected $table = 'transactions';
-    protected $allowedFields  = ['trx', 'uid', 'trx_name', 'category', 'trx_category', 'created_at', 'updated_at', 'note'];
+    protected $allowedFields  = ['trx', 'uid', 'trx_name', 'category', 'trx_category', 'icons', 'created_at', 'updated_at', 'time ', 'note'];
 
 
     public function postData($data){
