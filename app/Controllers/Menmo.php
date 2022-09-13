@@ -4,18 +4,21 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 
-use App\Models\UserM;
+use App\Models\MenmoUsersM;
+use App\Models\MenmoTransactionM;
 use CodeIgniter\RESTful\ResourceController;
 
 class Menmo extends ResourceController{
 
     use ResponseTrait;
 
-    protected $UserM;
+    protected $MenmoUsersM;
+    protected $MenmoTransactionM;
 
     public function __construct()
     {
-        $this->UserM = new UserM;
+        $this->MenmoUsersM = new MenmoUsersM;
+        $this->MenmoTransactionM = new MenmoTransactionM;
 
         helper(['auth']);
 
@@ -42,7 +45,7 @@ class Menmo extends ResourceController{
                 'user_type' => $this->request->getPost('user_type'),
             ];
 
-            if(!$this->UserM->postData($data)){
+            if(!$this->MenmoUsersM->postData($data)){
                 $respond = [
                     'message' => 'Success - User Created',
                     'data' => $data
@@ -60,10 +63,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->UserM->getData()){
+            if($this->MenmoUsersM->getData()){
                 $respond = [
                     'message' => 'Success - Get All User Data',
-                    'data' => $this->UserM->getData()
+                    'data' => $this->MenmoUsersM->getData()
                 ];
                 return $this->respond($respond, 200);;
             } else {
@@ -81,10 +84,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->UserM->getDataId($uid)){
+            if($this->MenmoUsersM->getDataId($uid)){
                 $respond = [
                     'message' => 'Success - Get User Data',
-                    'data' => $this->UserM->getDataId($uid)
+                    'data' => $this->MenmoUsersM->getDataId($uid)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -102,10 +105,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->UserM->getDataEmail($email)){
+            if($this->MenmoUsersM->getDataEmail($email)){
                 $respond = [
                     'message' => 'Success - Get User Data',
-                    'data' => $this->UserM->getDataEmail($email)
+                    'data' => $this->MenmoUsersM->getDataEmail($email)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -124,7 +127,7 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if(!$this->UserM->putUser($uid, $requestData)){
+            if(!$this->MenmoUsersM->putUser($uid, $requestData)){
                 $respond = [
                     'message' => 'Success - User data Updated',
                     'data' => $requestData
@@ -146,9 +149,9 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->UserM->getDataId($uid)){
+            if($this->MenmoUsersM->getDataId($uid)){
 
-                $this->UserM->deleteUser($uid);
+                $this->MenmoUsersM->deleteUser($uid);
 
                 $respond = [
                     'message' => 'Success - User Removed',
@@ -159,4 +162,123 @@ class Menmo extends ResourceController{
             }
         }
     }
+
+    // ----------------------------------------------------------------
+    //  API GROUP TRANSACTIONS
+    // ----------------------------------------------------------------
+
+    public function postTransaction(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            $data = [
+                'trx' => 'trx-' . uniqid() . date('Y') . uniqid(),
+                'uid' => $this->request->getPost('uid'),
+                'trx_name' => $this->request->getPost('trx_name'),
+                'category' => $this->request->getPost('category'),
+                'trx_category' => $this->request->getPost('trx_category'),
+                'created_at' => $this->request->getPost('created_at'),
+                'updated_at' => $this->request->getPost('updated_at'),
+                'note' => $this->request->getPost('note'),
+            ];
+
+            if(!$this->MenmoTransactionM->postData($data)){
+                $respond = [
+                    'message' => 'Success - Transaction Created',
+                    'data' => $data
+                ];
+                return $this->respondCreated($respond);
+            } else {
+                return $this->fail('Request Failed', 400);
+            }
+        }
+    }
+
+    public function getTransactions(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->MenmoTransactionM->getData()){
+                $respond = [
+                    'message' => 'Success - Get All Transaction Data',
+                    'data' => $this->MenmoTransactionM->getData()
+                ];
+                return $this->respond($respond, 200);;
+            } else {
+                return $this->fail('Request Failed', 400);
+            }
+        }
+    }
+
+    public function getTransactionBy(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uri = explode('/', $_SERVER['PHP_SELF']);
+        $value = end($uri);
+        $filter = $uri[count($uri) - 2];
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->MenmoTransactionM->getDataBy($filter, $value)){
+                $respond = [
+                    'message' => 'Success - Get Transaction Data',
+                    'data' => $this->MenmoTransactionM->getDataBy($filter, $value)
+                ];
+                return $this->respond($respond, 200);
+            } else {
+                return $this->failNotFound('Request Failed - Data not found');
+            }
+        }
+    }
+
+    public function putTransaction(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uri = explode('/', $_SERVER['PHP_SELF']);
+        $trx = end($uri);
+        
+        $requestData = $this->request->getRawInput();
+        
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if(!$this->MenmoTransactionM->putData($trx, $requestData)){
+                $respond = [
+                    'message' => 'Success - Transaction data Updated',
+                    'data' => $requestData
+                ];
+
+                return $this->respondUpdated($respond);
+            } else {
+                return $this->failNotFound('Request Failed - Data not found', 400);
+            }
+        }
+
+    }
+
+    public function deleteTransaction() {
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uri = explode('/', $_SERVER['PHP_SELF']);
+        $trx = end($uri);
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->MenmoTransactionM->getDataBy('trx',$trx)){
+
+                $this->MenmoTransactionM->deleteData($trx);
+
+                $respond = [
+                    'message' => 'Success - Data Removed',
+                ];
+                return $this->respondDeleted($respond);
+            } else {
+                return $this->failNotFound('Request Failed - Data not found');
+            }
+        }
+    }
+    
 }

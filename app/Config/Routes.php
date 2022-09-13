@@ -50,6 +50,14 @@ $routes->put('/api/menmo/users/(:segment)', 'Menmo::putUser');
 $routes->delete('/api/menmo/users/(:segment)', 'Menmo::deleteUser');
 
 // ------------------------------------------------------------------------
+// Transactions Router
+$routes->post('/api/menmo/transactions', 'Menmo::postTransaction');
+$routes->get('/api/menmo/transactions', 'Menmo::getTransactions');
+$routes->get('/api/menmo/transactions/(:segment)/(:segment)', 'Menmo::getTransactionBy');
+$routes->put('/api/menmo/transactions/(:segment)', 'Menmo::putTransaction');
+$routes->delete('/api/menmo/transactions/(:segment)', 'Menmo::deleteTransaction');
+
+// ------------------------------------------------------------------------
 
 
 /*
