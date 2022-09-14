@@ -183,6 +183,7 @@ class Menmo extends ResourceController{
                 'created_at' => $this->request->getPost('created_at'),
                 'updated_at' => $this->request->getPost('updated_at'),
                 'note' => $this->request->getPost('note'),
+                'nominal' => $this->request->getPost('nominal'),
             ];
 
             if(!$this->MenmoTransactionM->postData($data)){
