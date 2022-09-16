@@ -38,24 +38,24 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 // -----------------------------------------------------------------------
-// Menmo App
+// Fimon App
 // -----------------------------------------------------------------------
 
 // Users Router
-$routes->post('/api/menmo/users', 'Menmo::postUser');
-$routes->get('/api/menmo/users', 'Menmo::getUsers');
-$routes->get('/api/menmo/users/(:segment)', 'Menmo::getUserId');
-$routes->get('/api/menmo/users/email/(:segment)', 'Menmo::getUserEmail');
-$routes->put('/api/menmo/users/(:segment)', 'Menmo::putUser');
-$routes->delete('/api/menmo/users/(:segment)', 'Menmo::deleteUser');
+$routes->post('/api/fimon/users', 'Fimon::postUser');
+$routes->get('/api/fimon/users', 'Fimon::getUsers');
+$routes->get('/api/fimon/users/(:segment)', 'Fimon::getUserId');
+$routes->get('/api/fimon/users/email/(:segment)', 'Fimon::getUserEmail');
+$routes->put('/api/fimon/users/(:segment)', 'Fimon::putUser');
+$routes->delete('/api/fimon/users/(:segment)', 'Fimon::deleteUser');
 
 // ------------------------------------------------------------------------
 // Transactions Router
-$routes->post('/api/menmo/transactions', 'Menmo::postTransaction');
-$routes->get('/api/menmo/transactions', 'Menmo::getTransactions');
-$routes->get('/api/menmo/transactions/(:segment)/(:segment)', 'Menmo::getTransactionBy');
-$routes->put('/api/menmo/transactions/(:segment)', 'Menmo::putTransaction');
-$routes->delete('/api/menmo/transactions/(:segment)', 'Menmo::deleteTransaction');
+$routes->post('/api/fimon/transactions', 'Fimon::postTransaction');
+$routes->get('/api/fimon/transactions', 'Fimon::getTransactions');
+$routes->get('/api/fimon/transactions/(:segment)/(:segment)', 'Fimon::getTransactionBy');
+$routes->put('/api/fimon/transactions/(:segment)', 'Fimon::putTransaction');
+$routes->delete('/api/fimon/transactions/(:segment)', 'Fimon::deleteTransaction');
 
 // ------------------------------------------------------------------------
 

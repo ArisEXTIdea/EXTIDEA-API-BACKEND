@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MenmoTransactionM extends Model{
+class FimonTransactionM extends Model{
     protected $table = 'transactions';
     protected $allowedFields  = ['trx', 'uid', 'trx_name', 'category', 'trx_category', 'icons', 'created_at', 'updated_at', 'time ', 'note', 'nominal'];
 

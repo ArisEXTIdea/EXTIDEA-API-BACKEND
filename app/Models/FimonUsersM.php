@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MenmoUsersM extends Model{
+class FimonUsersM extends Model{
     protected $table = 'users';
     protected $allowedFields  = ['uid', 'email', 'name', 'given_name', 'profile_picture', 'created_at', 'updated_at', 'user_type'];
 

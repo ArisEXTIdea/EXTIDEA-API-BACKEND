@@ -4,21 +4,21 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 
-use App\Models\MenmoUsersM;
-use App\Models\MenmoTransactionM;
+use App\Models\FimonUsersM;
+use App\Models\FimonTransactionM;
 use CodeIgniter\RESTful\ResourceController;
 
-class Menmo extends ResourceController{
+class Fimon extends ResourceController{
 
     use ResponseTrait;
 
-    protected $MenmoUsersM;
-    protected $MenmoTransactionM;
+    protected $FimonUsersM;
+    protected $FimonTransactionM;
 
     public function __construct()
     {
-        $this->MenmoUsersM = new MenmoUsersM;
-        $this->MenmoTransactionM = new MenmoTransactionM;
+        $this->FimonUsersM = new FimonUsersM;
+        $this->FimonTransactionM = new FimonTransactionM;
 
         helper(['auth']);
 
@@ -45,7 +45,7 @@ class Menmo extends ResourceController{
                 'user_type' => $this->request->getPost('user_type'),
             ];
 
-            if(!$this->MenmoUsersM->postData($data)){
+            if(!$this->FimonUsersM->postData($data)){
                 $respond = [
                     'message' => 'Success - User Created',
                     'data' => $data
@@ -63,10 +63,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoUsersM->getData()){
+            if($this->FimonUsersM->getData()){
                 $respond = [
                     'message' => 'Success - Get All User Data',
-                    'data' => $this->MenmoUsersM->getData()
+                    'data' => $this->FimonUsersM->getData()
                 ];
                 return $this->respond($respond, 200);;
             } else {
@@ -84,10 +84,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoUsersM->getDataId($uid)){
+            if($this->FimonUsersM->getDataId($uid)){
                 $respond = [
                     'message' => 'Success - Get User Data',
-                    'data' => $this->MenmoUsersM->getDataId($uid)
+                    'data' => $this->FimonUsersM->getDataId($uid)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -105,10 +105,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoUsersM->getDataEmail($email)){
+            if($this->FimonUsersM->getDataEmail($email)){
                 $respond = [
                     'message' => 'Success - Get User Data',
-                    'data' => $this->MenmoUsersM->getDataEmail($email)
+                    'data' => $this->FimonUsersM->getDataEmail($email)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -127,7 +127,7 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if(!$this->MenmoUsersM->putUser($uid, $requestData)){
+            if(!$this->FimonUsersM->putUser($uid, $requestData)){
                 $respond = [
                     'message' => 'Success - User data Updated',
                     'data' => $requestData
@@ -149,9 +149,9 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoUsersM->getDataId($uid)){
+            if($this->FimonUsersM->getDataId($uid)){
 
-                $this->MenmoUsersM->deleteUser($uid);
+                $this->FimonUsersM->deleteUser($uid);
 
                 $respond = [
                     'message' => 'Success - User Removed',
@@ -186,7 +186,7 @@ class Menmo extends ResourceController{
                 'nominal' => $this->request->getPost('nominal'),
             ];
 
-            if(!$this->MenmoTransactionM->postData($data)){
+            if(!$this->FimonTransactionM->postData($data)){
                 $respond = [
                     'message' => 'Success - Transaction Created',
                     'data' => $data
@@ -204,10 +204,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoTransactionM->getData()){
+            if($this->FimonTransactionM->getData()){
                 $respond = [
                     'message' => 'Success - Get All Transaction Data',
-                    'data' => $this->MenmoTransactionM->getData()
+                    'data' => $this->FimonTransactionM->getData()
                 ];
                 return $this->respond($respond, 200);;
             } else {
@@ -225,10 +225,10 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoTransactionM->getDataBy($filter, $value)){
+            if($this->FimonTransactionM->getDataBy($filter, $value)){
                 $respond = [
                     'message' => 'Success - Get Transaction Data',
-                    'data' => $this->MenmoTransactionM->getDataBy($filter, $value)
+                    'data' => $this->FimonTransactionM->getDataBy($filter, $value)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -247,7 +247,7 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if(!$this->MenmoTransactionM->putData($trx, $requestData)){
+            if(!$this->FimonTransactionM->putData($trx, $requestData)){
                 $respond = [
                     'message' => 'Success - Transaction data Updated',
                     'data' => $requestData
@@ -269,9 +269,9 @@ class Menmo extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->MenmoTransactionM->getDataBy('trx',$trx)){
+            if($this->FimonTransactionM->getDataBy('trx',$trx)){
 
-                $this->MenmoTransactionM->deleteData($trx);
+                $this->FimonTransactionM->deleteData($trx);
 
                 $respond = [
                     'message' => 'Success - Data Removed',
