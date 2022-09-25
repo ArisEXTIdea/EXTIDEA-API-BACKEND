@@ -276,6 +276,7 @@ class Fimon extends ResourceController{
                 $respond = [
                     'message' => 'Success - Data Removed',
                 ];
+                
                 return $this->respondDeleted($respond);
             } else {
                 return $this->failNotFound('Request Failed - Data not found');
