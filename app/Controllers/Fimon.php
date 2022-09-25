@@ -179,11 +179,11 @@ class Fimon extends ResourceController{
                 'trx_name' => $this->request->getPost('trx_name'),
                 'category' => $this->request->getPost('category'),
                 'trx_category' => $this->request->getPost('trx_category'),
+                'nominal' => $this->request->getPost('nominal'),
                 'icons' => $this->request->getPost('icons'),
-                'created_at' => $this->request->getPost('created_at'),
+                'trx_date' => $this->request->getPost('trx_date'),
                 'updated_at' => $this->request->getPost('updated_at'),
                 'note' => $this->request->getPost('note'),
-                'nominal' => $this->request->getPost('nominal'),
             ];
 
             if(!$this->FimonTransactionM->postData($data)){

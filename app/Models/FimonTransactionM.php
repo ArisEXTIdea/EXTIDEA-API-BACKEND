@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class FimonTransactionM extends Model{
     protected $table = 'transactions';
-    protected $allowedFields  = ['trx', 'uid', 'trx_name', 'category', 'trx_category', 'icons', 'created_at', 'updated_at', 'time ', 'note', 'nominal'];
+    protected $allowedFields  = ['trx', 'uid', 'trx_name', 'category', 'trx_category', 'nominal' , 'icons', 'trx_date', 'updated_at', 'note'];
 
 
     public function postData($data){
