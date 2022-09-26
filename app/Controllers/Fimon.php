@@ -178,11 +178,8 @@ class Fimon extends ResourceController{
                 'uid' => $this->request->getPost('uid'),
                 'trx_name' => $this->request->getPost('trx_name'),
                 'category' => $this->request->getPost('category'),
-                'trx_category' => $this->request->getPost('trx_category'),
                 'nominal' => $this->request->getPost('nominal'),
-                'icons' => $this->request->getPost('icons'),
                 'trx_date' => $this->request->getPost('trx_date'),
-                'updated_at' => $this->request->getPost('updated_at'),
                 'note' => $this->request->getPost('note'),
             ];
 
