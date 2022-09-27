@@ -17,8 +17,9 @@ class FimonTransactionM extends Model{
         return $this->findAll();
     }
 
-    public function getDataBy($filter, $value){
+    public function getDataBy($filter, $value, $uid){
         $this->where($filter, $value);
+        $this->where('uid', $uid);
         return $this->findAll();
     }
     

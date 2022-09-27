@@ -215,6 +215,7 @@ class Fimon extends ResourceController{
 
     public function getTransactionBy(){
         $apiToken = $this->request->header('Api-Key')->getValue();
+        $uid = $this->request->header('User-Id')->getValue();
         $uri = explode('/', $_SERVER['PHP_SELF']);
         $value = end($uri);
         $filter = $uri[count($uri) - 2];
@@ -222,10 +223,10 @@ class Fimon extends ResourceController{
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->FimonTransactionM->getDataBy($filter, $value)){
+            if($this->FimonTransactionM->getDataBy($filter, $value, $uid)){
                 $respond = [
                     'message' => 'Success - Get Transaction Data',
-                    'data' => $this->FimonTransactionM->getDataBy($filter, $value)
+                    'data' => $this->FimonTransactionM->getDataBy($filter, $value, $uid)
                 ];
                 return $this->respond($respond, 200);
             } else {
@@ -260,13 +261,15 @@ class Fimon extends ResourceController{
 
     public function deleteTransaction() {
         $apiToken = $this->request->header('Api-Key')->getValue();
+        $uid = $this->request->header('User-Id')->getValue();
+
         $uri = explode('/', $_SERVER['PHP_SELF']);
         $trx = end($uri);
 
         if(!checkToken($apiToken)){
             return $this->failForbidden('Access denied');
         } else {
-            if($this->FimonTransactionM->getDataBy('trx',$trx)){
+            if($this->FimonTransactionM->getDataBy('trx',$trx, $uid)){
 
                 $this->FimonTransactionM->deleteData($trx);
 
