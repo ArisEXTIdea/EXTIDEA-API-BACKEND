@@ -213,6 +213,25 @@ class Fimon extends ResourceController{
         }
     }
 
+    public function getTransactionsAllId(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uid = $this->request->header('User-Id')->getValue();
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->FimonTransactionM->getDataAllId($uid)){
+                $respond = [
+                    'message' => 'Success - Get All Transaction Data',
+                    'data' => $this->FimonTransactionM->getDataAllId($uid)
+                ];
+                return $this->respond($respond, 200);;
+            } else {
+                return $this->fail('Request Failed', 400);
+            }
+        }
+    }
+
     public function getTransactionBy(){
         $apiToken = $this->request->header('Api-Key')->getValue();
         $uid = $this->request->header('User-Id')->getValue();

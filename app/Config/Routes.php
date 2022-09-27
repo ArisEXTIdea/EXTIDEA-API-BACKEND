@@ -53,6 +53,7 @@ $routes->delete('/api/fimon/users/(:segment)', 'Fimon::deleteUser');
 // Transactions Router
 $routes->post('/api/fimon/transactions', 'Fimon::postTransaction');
 $routes->get('/api/fimon/transactions', 'Fimon::getTransactions');
+$routes->get('/api/fimon/transactions/id', 'Fimon::getTransactionsAllId');
 $routes->get('/api/fimon/transactions/(:segment)/(:segment)', 'Fimon::getTransactionBy');
 $routes->put('/api/fimon/transactions/(:segment)', 'Fimon::putTransaction');
 $routes->delete('/api/fimon/transactions/(:segment)', 'Fimon::deleteTransaction');
