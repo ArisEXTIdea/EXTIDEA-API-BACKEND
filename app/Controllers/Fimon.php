@@ -6,6 +6,7 @@ use CodeIgniter\API\ResponseTrait;
 
 use App\Models\FimonUsersM;
 use App\Models\FimonTransactionM;
+use App\Models\FimonDebtsM;
 use CodeIgniter\RESTful\ResourceController;
 
 class Fimon extends ResourceController{
@@ -14,11 +15,13 @@ class Fimon extends ResourceController{
 
     protected $FimonUsersM;
     protected $FimonTransactionM;
+    protected $FimonDebtsM;
 
     public function __construct()
     {
         $this->FimonUsersM = new FimonUsersM;
         $this->FimonTransactionM = new FimonTransactionM;
+        $this->FimonDebtsM = new FimonDebtsM();
 
         helper(['auth']);
 
@@ -291,6 +294,147 @@ class Fimon extends ResourceController{
             if($this->FimonTransactionM->getDataBy('trx',$trx, $uid)){
 
                 $this->FimonTransactionM->deleteData($trx);
+
+                $respond = [
+                    'message' => 'Success - Data Removed',
+                ];
+                
+                return $this->respondDeleted($respond);
+            } else {
+                return $this->failNotFound('Request Failed - Data not found');
+            }
+        }
+    }
+
+     // ----------------------------------------------------------------
+    //  API GROUP DEBTS
+    // ----------------------------------------------------------------
+
+    public function postDebt(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            $data = [
+                'debt_id' => 'dbtid-' . uniqid() . date('Y') . uniqid(),
+                'uid' => $this->request->getPost('uid'),
+                'client_name' => $this->request->getPost('client_name'),
+                'debt_type' => $this->request->getPost('debt_type'),
+                'nominal' => $this->request->getPost('nominal'),
+                'note' => $this->request->getPost('note'),
+                'debt_date' => $this->request->getPost('debt_date'),
+                'max_payment_date' => $this->request->getPost('max_payment_date'),
+            ];
+
+            if(!$this->FimonDebtsM->postData($data)){
+                $respond = [
+                    'message' => 'Success - Transaction Created',
+                    'data' => $data
+                ];
+                return $this->respondCreated($respond);
+            } else {
+                return $this->fail('Request Failed', 400);
+            }
+        }
+    }
+
+    public function getDebts(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->FimonDebtsM->getData()){
+                $respond = [
+                    'message' => 'Success - Get All Transaction Data',
+                    'data' => $this->FimonDebtsM->getData()
+                ];
+                return $this->respond($respond, 200);;
+            } else {
+                return $this->fail('Request Failed', 400);
+            }
+        }
+    }
+
+    public function getDebtsAllId(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uid = $this->request->header('User-Id')->getValue();
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->FimonDebtsM->getDataAllId($uid)){
+                $respond = [
+                    'message' => 'Success - Get All Transaction Data',
+                    'data' => $this->FimonDebtsM->getDataAllId($uid)
+                ];
+                return $this->respond($respond, 200);;
+            } else {
+                return $this->fail('Request Failed', 400);
+            }
+        }
+    }
+
+    public function getDebtBy(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uid = $this->request->header('User-Id')->getValue();
+        $uri = explode('/', $_SERVER['PHP_SELF']);
+        $value = end($uri);
+        $filter = $uri[count($uri) - 2];
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->FimonDebtsM->getDataBy($filter, $value, $uid)){
+                $respond = [
+                    'message' => 'Success - Get Transaction Data',
+                    'data' => $this->FimonDebtsM->getDataBy($filter, $value, $uid)
+                ];
+                return $this->respond($respond, 200);
+            } else {
+                return $this->failNotFound('Request Failed - Data not found');
+            }
+        }
+    }
+
+    public function putDebt(){
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uri = explode('/', $_SERVER['PHP_SELF']);
+        $trx = end($uri);
+        
+        $requestData = $this->request->getRawInput();
+        
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if(!$this->FimonDebtsM->putData($trx, $requestData)){
+                $respond = [
+                    'message' => 'Success - Transaction data Updated',
+                    'data' => $requestData
+                ];
+
+                return $this->respondUpdated($respond);
+            } else {
+                return $this->failNotFound('Request Failed - Data not found', 400);
+            }
+        }
+
+    }
+
+    public function deleteDebt() {
+        $apiToken = $this->request->header('Api-Key')->getValue();
+        $uid = $this->request->header('User-Id')->getValue();
+
+        $uri = explode('/', $_SERVER['PHP_SELF']);
+        $trx = end($uri);
+
+        if(!checkToken($apiToken)){
+            return $this->failForbidden('Access denied');
+        } else {
+            if($this->FimonDebtsM->getDataBy('trx',$trx, $uid)){
+
+                $this->FimonDebtsM->deleteData($trx);
 
                 $respond = [
                     'message' => 'Success - Data Removed',

@@ -60,7 +60,15 @@ $routes->delete('/api/fimon/transactions/(:segment)', 'Fimon::deleteTransaction'
 
 // ------------------------------------------------------------------------
 
+// Debt Router
+$routes->post('/api/fimon/debts', 'Fimon::postDebt');
+$routes->get('/api/fimon/debts', 'Fimon::getDebts');
+$routes->get('/api/fimon/debts/id', 'Fimon::getDebtsAllId');
+$routes->get('/api/fimon/debts/(:segment)/(:segment)', 'Fimon::getDebtBy');
+$routes->put('/api/fimon/debts/(:segment)', 'Fimon::putDebt');
+$routes->delete('/api/fimon/debts/(:segment)', 'Fimon::deleteBent');
 
+// ------------------------------------------------------------------------
 /*
  * --------------------------------------------------------------------
  * Additional Routing
