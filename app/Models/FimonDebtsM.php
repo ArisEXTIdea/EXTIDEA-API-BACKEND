@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class FimonDebtsM extends Model{
     protected $table = 'debts';
-    protected $allowedFields  = ['debt_id', 'uid', 'client_name', 'debt_type', 'nominal', 'note', 'debt_date', 'max_payment_date', 'debt_title'];
+    protected $allowedFields  = ['debt_id', 'uid', 'client_name', 'debt_type', 'nominal', 'note', 'debt_date', 'max_payment_date', 'debt_title', 'status'];
 
 
     public function postData($data){

@@ -326,6 +326,7 @@ class Fimon extends ResourceController{
                 'debt_date' => $this->request->getPost('debt_date'),
                 'max_payment_date' => $this->request->getPost('max_payment_date'),
                 'debt_title' => $this->request->getPost('debt_title'),
+                'status' => 0,
             ];
 
             if(!$this->FimonDebtsM->postData($data)){
